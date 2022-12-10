@@ -11,9 +11,11 @@ export async function getPokemonApi() {
   }
 }
 
-export async function getPokemonDetailsByUrlApi() {
+export async function getPokemonDetailsByUrlApi(url) {
     try {
-
+const response = await fetch(url);
+const result = await response.json();
+return result;
     } catch (error) {
         throw error;
     }
