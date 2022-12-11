@@ -1,6 +1,5 @@
 import { StyleSheet, Text, FlatList } from "react-native";
 import React from "react";
-import symbolicateStackTrace from "react-native/Libraries/Core/Devtools/symbolicateStackTrace";
 import PokemonCard from "./PokemonCard";
 
 export default function PokemonList(props) {
@@ -17,8 +16,8 @@ export default function PokemonList(props) {
   );
 }
 
-const styles  = StyleSheet.create({
-    flatListContentContainer: {
-        paddingHorizontal: 5
-    }
-})
+const styles = StyleSheet.create({
+  flatListContentContainer: {
+    paddingHorizontal: 5,
+  },
+});

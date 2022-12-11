@@ -6,12 +6,14 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from "react-native";
+import { capitalize } from "lodash";
 import getColorByPokemonType from "../utils/getColorType";
 
 export default function PokemonCard(props) {
   const { pokemon } = props;
 
-    const bgStyles = { backgroundColor: "#000", ...styles.bgStyles}
+  const pokemonColor = getColorByPokemonType(pokemon.type);
+  const bgStyles = { backgroundColor: pokemonColor, ...styles.bgStyles };
 
   const goToPokemon = () => {
     console.log(`Vamos al pokemon: ${pokemon.name}`);
@@ -23,7 +25,7 @@ export default function PokemonCard(props) {
         <View style={styles.spacing}>
           <View style={bgStyles}>
             <Text style={styles.number}>#{`${pokemon.id}`.padStart(3, 0)}</Text>
-            <Text style={styles.name}>{pokemon.name}</Text>
+            <Text style={styles.name}>{capitalize(pokemon.name)}</Text>
             <Image source={{ uri: pokemon.image }} style={styles.image} />
           </View>
         </View>
