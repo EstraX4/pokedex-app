@@ -16,8 +16,6 @@ export default function LoginForm() {
     validationSchema: Yup.object(validationSchema()),
     validateOnChange: false,
     onSubmit: (formValue) => {
-      console.log("Formulario enviado...");
-      console.log(formValue);
     },
   });
   return (

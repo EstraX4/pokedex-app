@@ -10,14 +10,12 @@ export default function Header(props) {
   const bgStyle = [{ backgroundColor: color, ...styles.bg }];
   return (
     <>
-      <View style={bgStyle}>
-        
-      </View>
+      <View style={bgStyle}></View>
       <SafeAreaView style={styles.content}>
-        {/* <View style={styles.header}>
+        <View style={styles.header}>
           <Text style={styles.name}>{capitalize(name)}</Text>
           <Text style={styles.number}>#{`${id}`.padStart(3, 0)}</Text>
-        </View> */}
+        </View>
         <Image
           source={require("../../assets/pokeballT.png")}
           style={styles.pokeball}
@@ -32,7 +30,6 @@ export default function Header(props) {
 }
 
 const styles = StyleSheet.create({
-  
   bg: {
     width: "100%",
     height: 300,
@@ -43,17 +40,21 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   header: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
     paddingTop: 40,
   },
   name: {
+    position: "absolute",
+    top: 67,
     color: "#fff",
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "bold",
   },
   number: {
+    position: "absolute",
+    top: 110,
     color: "#fff",
     fontWeight: "bold",
   },

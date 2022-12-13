@@ -1,10 +1,13 @@
-import { ScrollView, Text, StyleSheet } from "react-native";
+import { ScrollView, Text, StyleSheet, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { getPokemonDetailApi } from "../api/pokemon";
 import { Header, Type, Stats } from "../components/Pokemon";
+import { capitalize } from "lodash";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import { BorderlessButton } from "react-native-gesture-handler";
 
 export default function Pokemon(props) {
+  const { name, id, image, type } = props;
   const {
     navigation,
     route: { params },
@@ -13,7 +16,15 @@ export default function Pokemon(props) {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => (<Text style={styles.headerRightText}>Pokemon id</Text> ),
+      headerRight: () => (
+        <Icon
+        name="heart"
+        color="#fff"
+        size={20}
+        style={{ marginLeft: 20 }}
+        onPress={navigation.goBack}
+      />
+      ),
       headerLeft: () => (
         <Icon
           name="arrow-left"
@@ -59,5 +70,14 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 30,
     fontWeight: "bold",
+  },
+  name: {
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  number: {
+    color: "#fff",
+    fontSize: 30,
   },
 });
