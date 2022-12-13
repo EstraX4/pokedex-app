@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native";
+import { ScrollView, Text, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import { getPokemonDetailApi } from "../api/pokemon";
 import { Header, Type, Stats } from "../components/Pokemon";
@@ -13,7 +13,7 @@ export default function Pokemon(props) {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => null,
+      headerRight: () => (<Text style={styles.headerRightText}>Pokemon id</Text> ),
       headerLeft: () => (
         <Icon
           name="arrow-left"
@@ -48,7 +48,16 @@ export default function Pokemon(props) {
         type={pokemon.types[0].type.name}
       />
       <Type types={pokemon.types} />
-      <Stats stats={pokemon.stats} />
+      <Stats stats={pokemon.stats} type={pokemon.types[0].type.name} />
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  headerRightText: {
+    marginRight: 140,
+    color: "#fff",
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+});

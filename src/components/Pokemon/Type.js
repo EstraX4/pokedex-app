@@ -16,7 +16,7 @@ export default function Type(props) {
             backgroundColor: getColorByPokemonType(item.type.name),
           }}
         >
-          <Text>{capitalize(item.type.name)}</Text>
+          <Text style={styles.nameText}>{capitalize(item.type.name)}</Text>
         </View>
       ))}
     </View>
@@ -31,9 +31,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   pill: {
-    paddingHorizontal: 30,
-    paddingVertical: 10,
+    width: 90,
+    height: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 6,
     borderRadius: 20,
     marginHorizontal: 10,
+  },
+  nameText: {
+    textAlign: "center",
+    color: "#fff",
   },
 });

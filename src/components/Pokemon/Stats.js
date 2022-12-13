@@ -1,9 +1,10 @@
 import { StyleSheet, View, Text } from "react-native";
 import { map, capitalize } from "lodash";
+import getColorByPokemonType from "../../utils/getColorType";
 import React from "react";
 
 export default function Stats(props) {
-  const { stats } = props;
+  const { stats, type } = props;
 
   const barStyles = (number) => {
     const color = number > 49 ? "#00ac17" : "#ff3e3e";
@@ -15,11 +16,26 @@ export default function Stats(props) {
 
   return (
     <View style={styles.content}>
-      <Text style={styles.title}>Stats</Text>
+      <Text
+        style={{
+          ...styles.title,
+          color: getColorByPokemonType(type),
+        }}
+      >
+        Base Stats
+      </Text>
       {map(stats, (item, index) => (
         <View key={index} style={styles.block}>
           <View style={styles.blockTitle}>
-            <Text style={styles.statName}> {capitalize(item.stat.name)}</Text>
+            <Text
+              style={{
+                ...styles.statName,
+                color: getColorByPokemonType(type),
+              }}
+            >
+              {" "}
+              {capitalize(item.stat.name)}
+            </Text>
           </View>
           <View style={styles.blockInfo}>
             <Text style={styles.number}>{item.base_stat}</Text>
