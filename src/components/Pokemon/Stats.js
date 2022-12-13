@@ -10,7 +10,7 @@ export default function Stats(props) {
     const color = number > 49 ? "#00ac17" : "#ff3e3e";
     return {
       backgroundColor: color,
-      width: `${number}%`,
+      width: `${number/2}%` ,
     };
   };
 
@@ -40,7 +40,13 @@ export default function Stats(props) {
           <View style={styles.blockInfo}>
             <Text style={styles.number}>{item.base_stat}</Text>
             <View style={styles.bgBar}>
-              <View style={[styles.bar, barStyles(item.base_stat)]} />
+              <View
+                style={{
+                  ...styles.bar, 
+                  ...barStyles(item.base_stat),
+                  backgroundColor: getColorByPokemonType(type),
+                }}
+              />
             </View>
           </View>
         </View>
@@ -52,13 +58,14 @@ export default function Stats(props) {
 const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 20,
-    marginTop: 40,
+    marginTop: 30,
     marginBottom: 80,
   },
   title: {
+    textAlign: "center",
     fontWeight: "bold",
     fontSize: 20,
-    paddingBottom: 5,
+    paddingBottom: 10,
   },
   block: {
     flexDirection: "row",
