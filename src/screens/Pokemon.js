@@ -5,6 +5,7 @@ import { Header, Type, Stats } from "../components/Pokemon";
 import { capitalize } from "lodash";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { BorderlessButton } from "react-native-gesture-handler";
+import getColorByPokemonType from "../utils/getColorType";
 
 export default function Pokemon(props) {
   const { name, id, image, type } = props;
@@ -52,7 +53,11 @@ export default function Pokemon(props) {
   if (!pokemon) return null;
 
   return (
-    <ScrollView>
+    <ScrollView style={{
+      borderColor: getColorByPokemonType(pokemon.types[0].type.name),
+      backgroundColor: "white",
+      borderWidth: 6,
+    }}>
       <Header
         name={pokemon.name}
         id={pokemon.id}
