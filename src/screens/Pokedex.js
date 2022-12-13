@@ -28,6 +28,9 @@ export default function Pokedex() {
           type: pokemonDetails.types[0].type.name,
           order: pokemonDetails.order,
           image: pokemonDetails.sprites.other["official-artwork"].front_default,
+          weight: pokemonDetails.weight,
+          height: pokemonDetails.height,
+          moves: pokemonDetails.moves,
         });
       }
       setPokemons([...pokemons, ...pokemonsArray]);

@@ -1,7 +1,7 @@
 import { ScrollView, Text, StyleSheet, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { getPokemonDetailApi } from "../api/pokemon";
-import { Header, Type, Stats } from "../components/Pokemon";
+import { Header, Type, Stats, About, Evolution } from "../components/Pokemon";
 import { capitalize } from "lodash";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { BorderlessButton } from "react-native-gesture-handler";
@@ -19,13 +19,12 @@ export default function Pokemon(props) {
     navigation.setOptions({
       headerRight: () => (
         <Icon
-        name="heart"
-        color="#fff"
-        size={30}
-        
-        style={{ marginRight: 20, alignContent: "center"}}
-        onPress={navigation.goBack}
-      />
+          name="heart"
+          color="#fff"
+          size={30}
+          style={{ marginRight: 20, alignContent: "center" }}
+          onPress={navigation.goBack}
+        />
       ),
       headerLeft: () => (
         <Icon
@@ -53,11 +52,13 @@ export default function Pokemon(props) {
   if (!pokemon) return null;
 
   return (
-    <ScrollView style={{
-      borderColor: getColorByPokemonType(pokemon.types[0].type.name),
-      backgroundColor: "white",
-      borderWidth: 6,
-    }}>
+    <ScrollView
+      style={{
+        borderColor: getColorByPokemonType(pokemon.types[0].type.name),
+        backgroundColor: "white",
+        borderWidth: 6,
+      }}
+    >
       <Header
         name={pokemon.name}
         id={pokemon.id}
@@ -65,7 +66,14 @@ export default function Pokemon(props) {
         type={pokemon.types[0].type.name}
       />
       <Type types={pokemon.types} />
+      <About
+        weight={pokemon.weight}
+        height={pokemon.height}
+        type={pokemon.types[0].type.name}
+        moves={pokemon.moves}
+      />
       <Stats stats={pokemon.stats} type={pokemon.types[0].type.name} />
+      <Evolution species={pokemon.species.url} type={pokemon.types[0].type.name}/>
     </ScrollView>
   );
 }

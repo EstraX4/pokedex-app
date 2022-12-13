@@ -10,7 +10,7 @@ export default function Stats(props) {
     const color = number > 49 ? "#00ac17" : "#ff3e3e";
     return {
       backgroundColor: color,
-      width: `${number/2}%` ,
+      width: `${number/3}%` ,
     };
   };
 
