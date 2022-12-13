@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import FavoriteNavigation from "./FavoriteNavigation";
 import PokedexNavigation from "./PokedexNavigation";
 import AccountNavigation from "./AccountNavigation";
+import { ImageBackground } from "react-native-web";
 
 const Tab = createBottomTabNavigator();
 
@@ -47,6 +48,6 @@ export default function Navigation() {
 
 function renderPokeball() {
     return (
-        <Image source={require("../assets/pokeball.png")} style={{ width: 75, height: 75, top: -15}} />
+        <Image source={require("../assets/pokebalTBlack.png")} style={{ width: 75, height: 75, top: -15}} />
     )
 }

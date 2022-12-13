@@ -20,8 +20,9 @@ export default function Pokemon(props) {
         <Icon
         name="heart"
         color="#fff"
-        size={20}
-        style={{ marginLeft: 20 }}
+        size={30}
+        
+        style={{ marginRight: 20, alignContent: "center"}}
         onPress={navigation.goBack}
       />
       ),
@@ -29,7 +30,7 @@ export default function Pokemon(props) {
         <Icon
           name="arrow-left"
           color="#fff"
-          size={20}
+          size={30}
           style={{ marginLeft: 20 }}
           onPress={navigation.goBack}
         />

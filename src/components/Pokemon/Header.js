@@ -71,7 +71,9 @@ const styles = StyleSheet.create({
   },
   pokeball: {
     position: "absolute",
-    width: "100%",
-    height: 300,
+    alignSelf: "center",
+    width: "80%",
+    height: "80%",
+    resizeMode: "contain",
   },
 });
