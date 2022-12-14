@@ -19,22 +19,22 @@ export default function About(props) {
         About
       </Text>
       <View style={styles.block}>
-        <View style={styles.blockTitle}>
+        <View style={styles.blockInfo}>
           <Text style={styles.number}>{capitalize(weight / 10)} kg</Text>
-          <Text style={styles.title}>Weight</Text>
-        </View>
-        <View style={styles.blockTitle}>
           <Text style={styles.number}>{capitalize(height / 10)} m</Text>
-          <Text style={styles.title}>Height</Text>
+          <View style={styles.blockInfoMoves}>
+            {map(newMoves, (item, index) => (
+              <Text key={index} style={styles.movesT}>
+                {capitalize(item.move.name)}
+              </Text>
+            ))}
+          </View>
         </View>
-        <View style={styles.blockTitle}>
-          {map(newMoves, (item, index) => (
-            <Text key={index} style={styles.movesT}>
-              {capitalize(item.move.name)}
-            </Text>
-          ))}
 
-          <Text style={styles.title}>Moves</Text>
+        <View style={styles.blockTitle}>
+          <Text style={styles.title}>Weight</Text>
+          <Text style={styles.title}>Height</Text>
+          <Text style={styles.titleM}>Moves</Text>
         </View>
       </View>
     </View>
@@ -51,33 +51,56 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 20,
-    paddingBottom: 10,
+    paddingBottom: 15,
   },
   title: {
+    width: "30%",
+    textAlign: "center",
+    height: 50,
     textAlign: "center",
     fontSize: 12,
     color: "#666666",
   },
-  block: {
+  titleM: {
+    width: "30%",
+    textAlign: "center",
+    paddingLeft: 19,
+    height: 50,
+    textAlign: "center",
+    fontSize: 12,
+    color: "#666666",
+  },
+  block: {},
+  blockInfo: {
     flexDirection: "row",
-    paddingVertical: 5,
+    alignContent: "center",
+    justifyContent: "center",
+    width: "90%",
   },
   blockTitle: {
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
+    width: "90%",
+  },
+  blockInfoMoves: {
     width: "30%",
   },
   number: {
+    width: "30%",
     textAlign: "center",
     height: 50,
-    paddingTop: 10,
+    paddingTop: 14,
     marginTop: 2,
     fontSize: 16,
     color: "#000",
+    borderRightColor: "black",
+    borderRightWidth: StyleSheet.hairlineWidth,
   },
   movesT: {
     textAlign: "center",
     width: 110,
-    height: 50,
-    marginTop: 2,
+    height: 30,
     fontSize: 16,
     color: "#000",
   },

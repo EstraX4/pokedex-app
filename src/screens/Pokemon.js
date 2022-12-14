@@ -1,7 +1,7 @@
 import { ScrollView, Text, StyleSheet, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { getPokemonDetailApi } from "../api/pokemon";
-import { Header, Type, Stats, About, Evolution } from "../components/Pokemon";
+import { Header, Type, Stats, About, Evolutions } from "../components/Pokemon";
 import { capitalize } from "lodash";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { BorderlessButton } from "react-native-gesture-handler";
@@ -72,8 +72,8 @@ export default function Pokemon(props) {
         type={pokemon.types[0].type.name}
         moves={pokemon.moves}
       />
-      <Stats stats={pokemon.stats} type={pokemon.types[0].type.name} />
-      <Evolution species={pokemon.species.url} type={pokemon.types[0].type.name}/>
+      <Stats stats={pokemon.stats}  type={pokemon.types[0].type.name} />
+      <Evolutions species={pokemon.species.url} type={pokemon.types[0].type.name} />
     </ScrollView>
   );
 }

@@ -4,13 +4,13 @@ import getColorByPokemonType from "../../utils/getColorType";
 import React from "react";
 
 export default function Stats(props) {
-  const { stats, type } = props;
+  const { stats, type, statT } = props;
 
   const barStyles = (number) => {
     const color = number > 49 ? "#00ac17" : "#ff3e3e";
     return {
       backgroundColor: color,
-      width: `${number/3}%` ,
+      width: `${number / 3}%`,
     };
   };
 
@@ -42,7 +42,7 @@ export default function Stats(props) {
             <View style={styles.bgBar}>
               <View
                 style={{
-                  ...styles.bar, 
+                  ...styles.bar,
                   ...barStyles(item.base_stat),
                   backgroundColor: getColorByPokemonType(type),
                 }}
