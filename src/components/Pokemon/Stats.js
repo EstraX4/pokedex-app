@@ -58,8 +58,8 @@ export default function Stats(props) {
 const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 20,
-    marginTop: 30,
-    marginBottom: 80,
+    marginTop: 10,
+    marginBottom: 40,
   },
   title: {
     textAlign: "center",

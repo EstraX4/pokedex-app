@@ -1,13 +1,26 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { capitalize } from "lodash";
 import getColorByPokemonType from "../../utils/getColorType";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import {getPokemonDetailApi} from "../../api/pokemon";
+import { getPokemonDetailApi } from "../../api/pokemon";
 
 export default function Evolutions(props) {
-  const { species, type } = props;
+  const { species, type, pokemon } = props;
   const [evolutions, setEvolutions] = React.useState([]);
+
+  const navigation = useNavigation();
+
+  const goToPokemon = (id) => {
+    navigation.navigate("Pokemon", { id: id });
+  };
 
   const getRequest = async (url) => {
     try {
@@ -31,21 +44,36 @@ export default function Evolutions(props) {
         newEvolutions.push(newEvolution1);
 
         if (res2.chain.evolves_to.length > 0) {
-          const evolution2 = await getRequest(
-            res2.chain.evolves_to[0].species.url
-          );
-          const newEvolution2 = await getPokemonDetailApi(evolution2.id);
-          newEvolutions.push(newEvolution2);
+          if (res2.chain.evolves_to.length >= 1) {
+            for (const element of res2.chain.evolves_to) {
+              const evolution2 = await getRequest(element.species.url);
+              const newEvolution2 = await getPokemonDetailApi(evolution2.id);
+              newEvolutions.push(newEvolution2);
+            }
+          } else {
+            const evolution2 = await getRequest(
+              res2.chain.evolves_to[0].species.url
+            );
+            const newEvolution2 = await getPokemonDetailApi(evolution2.id);
+            newEvolutions.push(newEvolution2);
+          }
         }
 
-        if (res2.chain.evolves_to[0]?.evolves_to?.length > 0) {
-          const evolution3 = await getRequest(
-            res2.chain.evolves_to[0].evolves_to[0].species.url
-          );
-          const newEvolution3 = await getPokemonDetailApi(evolution3.id);
-          newEvolutions.push(newEvolution3);
+        if (res2.chain.evolves_to.length > 0) {
+          if (res2.chain.evolves_to.length >= 1) {
+            for (const element of res2.chain.evolves_to[0].evolves_to) {
+              const evolution3 = await getRequest(element.species.url);
+              const newEvolution3 = await getPokemonDetailApi(evolution3.id);
+              newEvolutions.push(newEvolution3);
+            }
+          } else {
+            const evolution3 = await getRequest(
+              res2.chain.evolves_to[0].evolves_to[0].species.url
+            );
+            const newEvolution3 = await getPokemonDetailApi(evolution3.id);
+            newEvolutions.push(newEvolution3);
+          }
         }
-
         setEvolutions(newEvolutions);
       } catch (error) {
         console.error("Error con las evoluciones: " + error);
@@ -64,30 +92,84 @@ export default function Evolutions(props) {
         >
           Evolutions
         </Text>
-        <View style={styles.images}>
-          {evolutions.map((item, index) => (
-            <View key={index} style={styles.imagesContainer}>
-              <View>
-                <Image
-                  source={{
-                    uri: item.sprites.other["official-artwork"].front_default,
-                  }}
-                  style={styles.evolucionImage}
-                />
-                <Text style={{ textAlign: "center", color: getColorByPokemonType(type), fontWeight: "bold" }}>{capitalize(item.name)}</Text>
-              </View>
-              {index < evolutions.length-1  ? (
-                <Icon name="arrow-right" size={20} color={getColorByPokemonType(type)} />
-              ) : null}
-            </View>
-          ))}
-          {/*  */}
-        </View>
+        {evolutions.length > 3 ? (
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            {evolutions.map((item, index) => (
+              <TouchableWithoutFeedback
+                key={index}
+                onPress={() => goToPokemon(item.id)}
+              >
+                <View>
+                  <Image
+                    source={{
+                      uri: item.sprites.other["official-artwork"].front_default,
+                    }}
+                    style={styles.evolucionImage}
+                  />
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: getColorByPokemonType(type),
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {capitalize(item.name)}
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
+            ))}
+          </View>
+        ) : (
+          <View style={styles.images}>
+            {evolutions.map((item, index) => (
+              <TouchableWithoutFeedback
+                key={index}
+                onPress={() => goToPokemon(item.id)}
+              >
+                <View key={index} style={styles.imagesContainer}>
+                  <View>
+                    <Image
+                      source={{
+                        uri: item.sprites.other["official-artwork"]
+                          .front_default,
+                      }}
+                      style={styles.evolucionImage}
+                    />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: getColorByPokemonType(type),
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {capitalize(item.name)}
+                    </Text>
+                  </View>
+
+                  {index < evolutions.length - 1 ? (
+                    <Icon
+                      name="arrow-right"
+                      size={20}
+                      color={getColorByPokemonType(type)}
+                    />
+                  ) : null}
+                </View>
+              </TouchableWithoutFeedback>
+            ))}
+          </View>
+        )}
       </View>
     </>
   );
 }
-
 const styles = StyleSheet.create({
   content: {
     display: "flex",

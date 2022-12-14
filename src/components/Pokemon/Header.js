@@ -7,6 +7,31 @@ export default function Header(props) {
   const { name, id, image, type } = props;
   const color = getColorByPokemonType(type);
 
+  const goToPokemon = (id) => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Icon
+          name="heart"
+          color="#fff"
+          size={30}
+          style={{ marginRight: 20, alignContent: "center" }}
+          onPress={navigation.goBack}
+        />
+      ),
+      headerLeft: () => (
+        <Icon
+          name="arrow-left"
+          color="#fff"
+          size={30}
+          style={{ marginLeft: 20 }}
+          onPress={navigation.goBack}
+        />
+      ),
+    });
+  };
+
+
+
   const bgStyle = [{ backgroundColor: color, ...styles.bg }];
   return (
     <>
