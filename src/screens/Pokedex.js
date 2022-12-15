@@ -2,6 +2,7 @@ import { SafeAreaView, Text } from "react-native";
 import React, { useState, useEffect } from "react";
 import { getPokemonApi, getPokemonDetailsByUrlApi } from "../api/pokemon";
 import { PokemonList } from "../components";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Pokedex() {
   const [pokemons, setPokemons] = useState([]);
@@ -10,6 +11,12 @@ export default function Pokedex() {
   useEffect(() => {
     (async () => {
       await loadPokemons();
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      await AsyncStorage.removeItem("pokemonsfav");
     })();
   }, []);
 

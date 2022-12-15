@@ -1,31 +1,36 @@
 import { ScrollView, Text, StyleSheet, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { getPokemonDetailApi } from "../api/pokemon";
-import { Header, Type, Stats, About, Evolutions } from "../components/Pokemon";
+import { Header, Type, Stats, About, Evolutions, Favorite } from "../components/Pokemon";
 import { capitalize } from "lodash";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { BorderlessButton } from "react-native-gesture-handler";
 import getColorByPokemonType from "../utils/getColorType";
+import useAuth from "../hooks/useAuth";
 
 export default function Pokemon(props) {
-  const { name, id, image, type } = props;
   const {
     navigation,
     route: { params },
   } = props;
   const [pokemon, setPokemon] = useState(null);
+  const { auth } = useAuth();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await getPokemonDetailApi(params.id);
+        setPokemon(res);
+      } catch (error) {
+        console.error(error);
+        navigation.goBack();
+      }
+    })();
+  }, [params]);
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <Icon
-          name="heart"
-          color="#fff"
-          size={30}
-          style={{ marginRight: 20, alignContent: "center" }}
-          onPress={navigation.goBack}
-        />
-      ),
+      headerRight: () => auth && <Favorite id={pokemon?.id}/>,
       headerLeft: () => (
         <Icon
           name="arrow-left"
@@ -36,20 +41,10 @@ export default function Pokemon(props) {
         />
       ),
     });
-  }, [navigation, params]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await getPokemonDetailApi(params.id);
-        setPokemon(response);
-      } catch (error) {
-        navigation.goBack();
-      }
-    })();
-  }, [params]);
+  }, [navigation, params, pokemon]);
 
   if (!pokemon) return null;
+
 
   return (
     <ScrollView

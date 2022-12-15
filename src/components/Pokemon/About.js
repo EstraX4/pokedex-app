@@ -75,13 +75,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
-    width: "90%",
+    width: "100%",
   },
   blockTitle: {
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
-    width: "90%",
+    width: "100%",
   },
   blockInfoMoves: {
     width: "30%",
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: 110,
     height: 30,
-    fontSize: 16,
+    fontSize: 12,
     color: "#000",
   },
 });
