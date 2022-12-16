@@ -1,16 +1,10 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  Button,
-  Keyboard,
-} from "react-native";
+import { StyleSheet, View, Text, TextInput, Keyboard } from "react-native";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { user, userDetails } from "../../utils/userDB";
 import useAuth from "../../hooks/useAuth";
+import { Button } from "react-native-paper";
 
 export default function LoginForm() {
   const [error, setError] = useState("");
@@ -25,7 +19,7 @@ export default function LoginForm() {
       const { username, password } = formValue;
 
       if (username !== user.username || password !== user.password) {
-        setError("El usuario o la contraseña no son correcto");
+        setError("The username or password is not correct");
       } else {
         login(userDetails);
       }
@@ -33,8 +27,8 @@ export default function LoginForm() {
   });
 
   return (
-    <View>
-      <Text style={styles.title}>Iniciar sesión</Text>
+    <View style={styles.content}>
+      <Text style={styles.title}>LOG IN</Text>
       <TextInput
         placeholder="Nombre de usuario"
         style={styles.input}
@@ -50,11 +44,20 @@ export default function LoginForm() {
         value={formik.values.password}
         onChangeText={(text) => formik.setFieldValue("password", text)}
       />
-      <Button title="Entrar" onPress={formik.handleSubmit} />
-
+      <View style={styles.button}>
+        <Button
+          mode="contained"
+          buttonColor="#000"
+          textColor="#fff"
+          textDecorationLine="underline line-through"
+          onPress={formik.handleSubmit}
+          borderRadius= "20px"
+        >
+          CHECK IN
+        </Button>
+      </View>
       <Text style={styles.error}>{formik.errors.username}</Text>
       <Text style={styles.error}>{formik.errors.password}</Text>
-
       <Text style={styles.error}>{error}</Text>
     </View>
   );
@@ -69,15 +72,20 @@ function initialValues() {
 
 function validationSchema() {
   return {
-    username: Yup.string().required("El usuario es obligatorio"),
-    password: Yup.string().required("La contraseña es obligatoria"),
+    username: Yup.string().required("The user is required."),
+    password: Yup.string().required("password is required."),
   };
 }
 
 const styles = StyleSheet.create({
+  content: {
+    marginTop: "35%",
+    marginBottom: "35%",
+    height: "30%",
+  },
   title: {
     textAlign: "center",
-    fontSize: 28,
+    fontSize: 38,
     fontWeight: "bold",
     marginTop: 50,
     marginBottom: 15,
@@ -94,4 +102,10 @@ const styles = StyleSheet.create({
     color: "#f00",
     marginTop: 20,
   },
+  button: {
+    marginTop: 20,
+     marginRight: "3%", 
+     marginLeft: "3%",
+    width: "94%",
+  }
 });

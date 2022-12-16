@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   spinner: {
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 60,
   },
 });

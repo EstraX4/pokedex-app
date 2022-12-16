@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { size } from "lodash";
 import useAuth from "../../hooks/useAuth";
 import { getPokemonsFavoriteApi } from "../../api/favorite";
+import { Button } from "react-native-paper";
 
 export default function UserData() {
   const { auth, logout } = useAuth();
@@ -35,8 +36,17 @@ export default function UserData() {
         <ItemMenu title="Email" text={auth.email} />
         <ItemMenu title="Total Favoritos" text={`${total} pokemons`} />
       </View>
-
-      <Button title="Desconectarse" onPress={logout} style={styles.btnLogoun} />
+      <Button
+        mode="contained"
+        buttonColor="#000"
+        textColor="#fff"
+        textDecorationLine="underline line-through"
+        onPress={logout} 
+        style={styles.btnLogoun}
+      >
+        LOG OFF
+      </Button>
+      <Button title="Desconectarse"  />
     </View>
   );
 }
@@ -77,8 +87,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingRight: 10,
     width: 120,
-  },
-  btnLogoun: {
-    paddingTop: 20,
   },
 });
