@@ -46,7 +46,6 @@ export default function UserData() {
       >
         LOG OFF
       </Button>
-      <Button title="Desconectarse"  />
     </View>
   );
 }

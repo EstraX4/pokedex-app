@@ -1,42 +1,49 @@
-import { SafeAreaView, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView, Text, TouchableOpacity, ToastAndroid } from "react-native";
 import React, { useState, useEffect } from "react";
+import Toast from "react-native-toast-message";
+import { Searchbar } from "react-native-paper";
 import { getPokemonApi, getPokemonDetailsByUrlApi } from "../api/pokemon";
 import { PokemonList } from "../components";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { Searchbar } from "react-native-paper";
 
-export default function Pokedex(props) {
+export default function Pokedex() {
   const [pokemons, setPokemons] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
   const [pokemonsFilter, setPokemonsFilter] = useState([]);
- 
-  const searchFilterFunction = (text) => {
-    if (text) {
-      const newData = data.filter((item) => {
-        const itemData = item.name.first
-          ? item.name.first.toUpperCase()
-          : "".toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.idexOf(textData) > -1;
-      });
-      setFilteredData(newData);
-    } else {
-      setFilteredData(data);
-    }
-  };
+  const [isSearching, setIsSearching] = useState(false);
+
+  const [searchQuery, setSearchQuery] = React.useState("");
 
   useEffect(() => {
     (async () => {
+      //showToast()
+      Toast.show({
+        type: "info",
+        text1: "This is an info message",
+      });
       await loadPokemons();
     })();
   }, []);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     await AsyncStorage.removeItem("pokemonsfav");
-  //   })();
-  // }, []);
+  // const showToast = () => {
+  //   ToastAndroid.show("Cargando pokemons", ToastAndroid.LONG, ToastAndroid.CENTER);
+  // };
+
+  const onChangeSearch = (query) => {
+    setSearchQuery(query);
+    if (query === "" || query.length === 0) {
+      setPokemonsFilter(pokemons);
+      setIsSearching(false);
+    } else {
+      setIsSearching(true);
+      const search = searchQuery.toLowerCase();
+      const tempPokemonsFilter = pokemons.filter((pokemon) =>
+        pokemon.name.includes(search)
+      );
+      setPokemonsFilter(tempPokemonsFilter);
+    }
+  };
 
   const loadPokemons = async () => {
     try {
@@ -59,6 +66,7 @@ export default function Pokedex(props) {
         });
       }
       setPokemons([...pokemons, ...pokemonsArray]);
+      setPokemonsFilter([...pokemons, ...pokemonsArray]);
     } catch (error) {
       console.error(error);
     }
@@ -66,11 +74,17 @@ export default function Pokedex(props) {
 
   return (
     <SafeAreaView>
-      <Searchbar style={{ paddingTop: 45 }} />
-      <PokemonList
-        pokemons={pokemons}
+      <Searchbar
+        placeholder="Search"
+        onChangeText={onChangeSearch}
+        value={searchQuery}
+        style={{ paddingTop: 30 }}
+      />
+       <PokemonList
+        pokemons={pokemonsFilter}
         loadPokemons={loadPokemons}
         isNext={nextUrl}
+        isSearching={isSearching}
       />
     </SafeAreaView>
   );
