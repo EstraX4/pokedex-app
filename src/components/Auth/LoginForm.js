@@ -30,14 +30,14 @@ export default function LoginForm() {
     <View style={styles.content}>
       <Text style={styles.title}>LOG IN</Text>
       <TextInput
-        placeholder="Nombre de usuario"
+        placeholder="Name of user"
         style={styles.input}
         autoCapitalize="none"
         value={formik.values.username}
         onChangeText={(text) => formik.setFieldValue("username", text)}
       />
       <TextInput
-        placeholder="Contraseña"
+        placeholder="Password"
         style={styles.input}
         autoCapitalize="none"
         secureTextEntry={true}

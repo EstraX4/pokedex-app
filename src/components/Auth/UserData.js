@@ -26,15 +26,15 @@ export default function UserData() {
   return (
     <View style={styles.content}>
       <View style={styles.titleBlock}>
-        <Text style={styles.title}>Bienvenido,</Text>
-        <Text style={styles.title}>{`${auth.firstName} ${auth.lastName}`}</Text>
+        <Text style={styles.title}>Welcome,</Text>
+        <Text style={styles.title}>{`${auth.lastName}`}</Text>
       </View>
 
       <View style={styles.dataContent}>
-        <ItemMenu title="Nombre" text={`${auth.firstName} ${auth.lastName}`} />
+        <ItemMenu title="Name" text={`${auth.lastName}`} />
         <ItemMenu title="Username" text={auth.username} />
         <ItemMenu title="Email" text={auth.email} />
-        <ItemMenu title="Total Favoritos" text={`${total} pokemons`} />
+        <ItemMenu title="All Favorites" text={`${total} pokemons`} />
       </View>
       <Button
         mode="contained"

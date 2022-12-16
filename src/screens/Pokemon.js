@@ -1,7 +1,14 @@
 import { ScrollView, Text, StyleSheet, View } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getPokemonDetailApi } from "../api/pokemon";
-import { Header, Type, Stats, About, Evolutions, Favorite } from "../components/Pokemon";
+import {
+  Header,
+  Type,
+  Stats,
+  About,
+  Evolutions,
+  Favorite,
+} from "../components/Pokemon";
 import { capitalize } from "lodash";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { BorderlessButton } from "react-native-gesture-handler";
@@ -15,6 +22,14 @@ export default function Pokemon(props) {
   } = props;
   const [pokemon, setPokemon] = useState(null);
   const { auth } = useAuth();
+  const scrollRef = useRef();
+
+  const onPressTouch = () => {
+    scrollRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
+  }
 
   useEffect(() => {
     (async () => {
@@ -30,7 +45,7 @@ export default function Pokemon(props) {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => auth && <Favorite id={pokemon?.id}/>,
+      headerRight: () => auth && <Favorite id={pokemon?.id} />,
       headerLeft: () => (
         <Icon
           name="arrow-left"
@@ -45,15 +60,8 @@ export default function Pokemon(props) {
 
   if (!pokemon) return null;
 
-
   return (
-    <ScrollView
-      style={{
-        borderColor: getColorByPokemonType(pokemon.types[0].type.name),
-        backgroundColor: "white",
-        borderWidth: 6,
-      }}
-    >
+    <ScrollView ref={scrollRef}>
       <Header
         name={pokemon.name}
         id={pokemon.id}
@@ -67,8 +75,12 @@ export default function Pokemon(props) {
         type={pokemon.types[0].type.name}
         moves={pokemon.moves}
       />
-      <Stats stats={pokemon.stats}  type={pokemon.types[0].type.name} />
-      <Evolutions species={pokemon.species.url} type={pokemon.types[0].type.name} />
+      <Stats stats={pokemon.stats} type={pokemon.types[0].type.name} />
+      <Evolutions
+        species={pokemon.species.url}
+        type={pokemon.types[0].type.name}
+        onPressTouch={onPressTouch}
+      />
     </ScrollView>
   );
 }

@@ -1,4 +1,9 @@
-import { SafeAreaView, Text, TouchableOpacity, ToastAndroid } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  ToastAndroid,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import Toast from "react-native-toast-message";
 import { Searchbar } from "react-native-paper";
@@ -20,28 +25,37 @@ export default function Pokedex() {
       //showToast()
       Toast.show({
         type: "info",
-        text1: "This is an info message",
+        text1: "Loading pokemons",
+        text2: "This may take a while  ⏳",
+        autoHide: false,
       });
       await loadPokemons();
+      Toast.hide();
     })();
   }, []);
 
-  // const showToast = () => {
-  //   ToastAndroid.show("Cargando pokemons", ToastAndroid.LONG, ToastAndroid.CENTER);
-  // };
+  const showToast = () => {
+    ToastAndroid.showWithGravity(
+      "🐱 Loading pokemons, this may take a while ⏳",
+      ToastAndroid.LONG,
+      ToastAndroid.CENTER
+    );
+  };
 
   const onChangeSearch = (query) => {
     setSearchQuery(query);
-    if (query === "" || query.length === 0) {
-      setPokemonsFilter(pokemons);
-      setIsSearching(false);
-    } else {
-      setIsSearching(true);
-      const search = searchQuery.toLowerCase();
-      const tempPokemonsFilter = pokemons.filter((pokemon) =>
-        pokemon.name.includes(search)
-      );
-      setPokemonsFilter(tempPokemonsFilter);
+    if (pokemons.length > 0) {
+      if (query === "" || query.length === 0) {
+        setPokemonsFilter(pokemons);
+        setIsSearching(false);
+      } else {
+        setIsSearching(true);
+        const search = searchQuery.toLowerCase();
+        const tempPokemonsFilter = pokemons.filter((pokemon) =>
+          pokemon.name.includes(search)
+        );
+        setPokemonsFilter(tempPokemonsFilter);
+      }
     }
   };
 
@@ -71,21 +85,23 @@ export default function Pokedex() {
       console.error(error);
     }
   };
-
   return (
-    <SafeAreaView>
-      <Searchbar
-        placeholder="Search"
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-        style={{ paddingTop: 30 }}
-      />
-       <PokemonList
-        pokemons={pokemonsFilter}
-        loadPokemons={loadPokemons}
-        isNext={nextUrl}
-        isSearching={isSearching}
-      />
-    </SafeAreaView>
+    <>
+      <Toast position="bottom" bottomOffset={30} />
+      <SafeAreaView>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={onChangeSearch}
+          value={pokemons.length > 0 ? searchQuery : "Loading..."}
+          style={{ paddingTop: 30 }}
+        />
+        <PokemonList
+          pokemons={pokemonsFilter}
+          loadPokemons={loadPokemons}
+          isNext={nextUrl}
+          isSearching={isSearching}
+        />
+      </SafeAreaView>
+    </>
   );
 }

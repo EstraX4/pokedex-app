@@ -13,13 +13,16 @@ import React from "react";
 import { getPokemonDetailApi } from "../../api/pokemon";
 
 export default function Evolutions(props) {
-  const { species, type, pokemon } = props;
+  const { species, type, onPressTouch } = props;
   const [evolutions, setEvolutions] = React.useState([]);
 
   const navigation = useNavigation();
 
   const goToPokemon = (id) => {
     navigation.navigate("Pokemon", { id: id });
+    setTimeout(() => {
+      onPressTouch();
+    }, 1000);
   };
 
   const getRequest = async (url) => {
